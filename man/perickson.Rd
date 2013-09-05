@@ -7,12 +7,16 @@ Carcass detection probability acording to Erickson et al. 2004
 Calculates carcass detection probability based on persistence time, searcher efficiency, search interval and duration of study.
 }
 \usage{
-perickson(t_quer, f, d)
+perickson(t.bar=NULL, s, f, d)
 }
 \arguments{
-  \item{t_quer}{
+  \item{t.bar}{
 mean carcass persistence time in days (or another time unit)
 }
+  \item{s}{
+mean (e.g. daily) carcass persistence probability. 
+}
+
   \item{f}{
 searcher efficiency: probability that a carcass present on the study plot is detected by a searcher during a seach.
 }
@@ -21,7 +25,8 @@ search interval: time (in days) between two searches
 }
 }
 \details{
-Time measurements (search interval and carcass persistence time) should be given in the same unit. 
+Time measurements (search interval and carcass persistence time or persistence probability) should be given in the same unit. 
+Either t.bar or s has to be provided.
 }
 \value{
 a proportion: the probability that an animal that dies during the study period on the study plot is detected by a searcher
@@ -38,7 +43,7 @@ Fraenzi Korner-Nievergelt
 \code{\link{pkorner}}
 }
 \examples{
-perickson(t_quer=30, f=0.8, d=1)
+perickson(t.bar=30, f=0.8, d=1)
 }
 \keyword{methods}
 \keyword{misc}

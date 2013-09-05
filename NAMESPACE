@@ -1,1 +1,18 @@
-exportPattern("^[[:alpha:]]+")
+#exportPattern("^[[:alpha:]]+")    # everything that starts with a letter is exportet (not dot-functions)
+
+# single objects that have to be exportet, comma has to be in front of the line
+export(estimateN
+	, perickson
+	, persistence.prob
+	, phuso
+	, pkorner
+#	, posterior.N
+	, posteriorN
+	, search.efficiency
+	, shapeparameter
+#	, persistence
+#	, batdist
+#	, searches
+	)
+
+

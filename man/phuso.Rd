@@ -7,12 +7,16 @@ Carcass detection probability acording to Huso 2010
 Calculates carcass detection probability based on persistence probability, searcher efficiency, search interval and duration of study.
 }
 \usage{
-phuso(s, f, d)
+phuso(s, t.bar, f, d)
 }
 \arguments{
   \item{s}{
-persistence probability: probability that a carcass remains on the study plot for one day (or another time unit).
+persistence probability: probability that a carcass remains on the study plot for one day. This parameter is only used when t.bar is not provided.
 }
+  \item{t.bar}{
+mean persistence time (in days). Alternatively, s can be provided.  
+}
+
   \item{f}{
 searcher efficiency: probability that a carcass present on the study plot is detected by a searcher during a seach.
 }

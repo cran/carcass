@@ -20,10 +20,11 @@ LazyLoad: \tab yes\cr
 see worked example in Korner-Nievergelt et al 2011
 }
 \author{
-Fraenzi Korner-Nievergelt, Ivo Niermann, Oliver Behr, Robert Brinkmann, Pius Korner, Barbara Hellriegel, Manuela Huso
+Fraenzi Korner-Nievergelt, Ivo Niermann, Oliver Behr, Robert Brinkmann, Pius Korner, Barbara Hellriegel
 
 Maintainer: Fraenzi Korner-Nievergelt <fraenzi.korner@oikostat.ch>
 
+The authors thank Manuela Huso for commenting parts of the code.
 }
 \references{
 Erickson WP, Jeffrey J, Kronner K, Bay K (2004) Stateline Wind Project Wildlife. Monitoring Final Report, July 2001 - December 2003. - Technical report peer-reviewed by and submitted to FPL Energy, the Oregon Energy Facility Siting Council, and the Stateline Technical Advisory Committee, Oregon, USA, 105 pp\cr

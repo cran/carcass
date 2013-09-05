@@ -1,26 +1,29 @@
 \name{search.efficiency}
 \alias{search.efficiency}
 \title{
-Estimates detection probability per person and vegetation density using a binomial model
+Estimates detection probability per person and visibility classes using a binomial model
 }
 \description{
-The function estimates detection probability per vegetation density and person. 
+The function estimates detection probability per visibility class and person.
 A binomial mixed model is used with vegetation density as fixed effect and person as random factor, when data of more than 2 persons are available.
-The number of found and the number of overseen items have to be provided per person and vegetation density class.
-The detection probabilities are given per person with a 95 percent credible interval. An average vegetation density specific detection probabilty over all persons is given in addition. 
+The number of found and the number of overseen items have to be provided per person and visibility class (one line per observer and visibility class). When only one visibility class is available, the variable visibility must be provided with only one entry. It does not matter what.
+The detection probabilities are given per person with a 95\% credible interval. An average vegetation density specific detection probabilty over all persons is given in addition. 
 }
 \usage{
-search.efficiency(dat, nsim = 1000)
+search.efficiency(dat=NA, person=NA, visibility=NA, detected=NA,
+    notdetected=NA, nsim = 1000)
 }
 \arguments{
-  \item{dat}{
-a data.frame containing the following variables:\cr 
-  person     : names of the persons who searched\cr
-  visibility : visibility class\cr
-  detected   : number of detected items\cr
-  notdetected: number of not detected items\cr
-if no visibility classes are available, the variable visibility should contain only one value, e.g. all rows = 0
-}
+  The search efficiancy data may be provided as a \code{data.frame} containing all data or, alternatively, as seperate vectors. If no visibility classes are available, the variable visibility should be a vector with the same length as the others containing a single value (e.g. "not_measured").
+  \item{dat}{\code{Data.frame} containing the following columns:\cr 
+  \code{person}: names of the persons who searched\cr
+  \code{visibility}: visibility class\cr
+  \code{detected}: number of detected items\cr
+  \code{notdetected}: number of not detected items\cr}  
+  \item{person}{vector with names of the persons who searched}
+  \item{visibility}{vector with visibility classes}
+  \item{detected}{numeric vector with number of detected items}
+  \item{notdetected}{numeric vector with number of not detected items}
   \item{nsim}{
 the number of simulations from the posterior distributions of the model parameters used to construct the 95 percent credible intervals
 }
@@ -30,7 +33,7 @@ The function uses the function glmer of the package lme4 and the function sim of
 }
 \value{
 A list with two elements of class data.frame
-  \item{f.perperson}{a data.frame with the estimated detection probabilities per person and visibility class and its lower and uper limit of the 95 percent credible interval}
+  \item{f.perperson}{a \code{data.frame} with the estimated detection probabilities per person and visibility class and its lower and uper limit of the 95\% credible interval}
   \item{f.average}{a data.frame with the estimated detection probabilities per visibility class averaged over the persons}
 }
 \references{
@@ -45,7 +48,16 @@ Fraenzi Korner-Nievergelt
 \examples{
 data(searches)
 searches
+
+# Call to the function with data provided as data.frame:
 search.efficiency(searches)
+
+# Alternative:
+per <- searches$person
+visi <- searches$visibility
+det <- searches$detected
+notdet <- searches$notdetected
+search.efficiency(person=per, visibility=visi, detected=det, notdetected=notdet)
 
 }
 \keyword{misc}
