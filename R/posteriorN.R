@@ -25,8 +25,9 @@ if(nf>0)  interval <- c(min(N[!indexLower]), min(N[!indexUpper]))
 if(interval[2]==Inf) cat("Upper limit of CI larger than maxN! -> increase maxN\n")
 expected.median <- min(N[!cumsum(pN)<0.5])
 #expected.mean <- sum(pN*N)
-results <- list(interval=interval, expected=expected.median)
-if(dist==TRUE) results <- list(interval=interval,  expected=expected.median, pN=pN)
+results <- list(interval=interval, expected=expected.median, HT.estimate=nf/p)
+if(dist==TRUE) results <- list(interval=interval,  expected=expected.median, 
+                               HT.estimate=nf/p, pN=pN)
 results
 }
 

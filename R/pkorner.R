@@ -2,6 +2,7 @@
 # - FK, 23.06.2013: Bug when using search.efficiency.constant=FALSE removed.
 # - TR, 26.06.2013: Function can also handle non-constant persistence probability.
 # - FK, 26.08.2013: fixed the problem that function returned NA when for non -constant persistence probabilities less number of estimates than n*d were available. The function now assumes that the proportion of persistant carcasses is zero after the last estimate. 
+# - FK, 26.10.2013: inserted for non-constant persistence prob the line for the first search (at day =1)
 
 pkorner <-
 function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, search.efficiency.constant=TRUE, CI=FALSE, nsim=1000){
@@ -36,9 +37,8 @@ function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, sea
     found <- array(0, dim=c(n*d, n*d))
     diag(c) <- s[1]
     ns <- length(s)      # fk inserted
-    
     if(ns<10) message(paste("Proportion of persisting carcasses is only given for", ns, "days. It is assumed that no carcass persists longer than", ns, "days!"))
-    
+    if(d==1) found[1,1] <- f[1]*c[1,1]
     for(day in 2:(n*d)) {
       for(cohort in 1:(day-1)) c[day,cohort] <- (c[day-1,cohort] - found[day-1,cohort])*ifelse((day-cohort+1)<= ns, s[day-cohort+1], 0) # fk inserted ifelse function
       for(cohort in 1:day) if(day%%d==0) found[day,cohort] <- c[day,cohort]*f[ceiling((day-cohort+1)/d)]

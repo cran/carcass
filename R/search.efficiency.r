@@ -4,6 +4,7 @@
 ###########################################################################
 
 # Protocol of changes
+# - fk, 25.10.13: line 55: b changed to bsim@fixef[j,], so that uncertainty of estimates for fixed effects is also considered 
 # - tr, 13.06.13: Data can either be provided with seperate vectors or as a data.frame
 
 search.efficiency <- function(dat=NA, person=NA, visibility=NA, detected=NA, notdetected=NA, nsim=1000){
@@ -52,7 +53,7 @@ if(npersons>2 & nvisclass>1){
   predmat <- matrix(nrow=nrow(newdat), ncol=nsim)
   for(i in levels(dat$person)){ 
     for(j in 1:nsim) {
-    bpersi <- b + c(bsim@ranef$person[j,i,1],0, 0)
+    bpersi <- bsim@fixef[j,] + c(bsim@ranef$person[j,i,1],0, 0)
     predmat[newdat$person==i, j] <- plogis(Xmat%*%bpersi)
     }
     }

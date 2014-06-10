@@ -35,6 +35,7 @@ if TRUE the posterior density is given for all elements in 0:maxN
 \value{
 \item{interval}{vector of length 2 containing the lower and upper limit of the interval specified in the argument ci.int}
 \item{expected}{median of the posterior distribution of the number of fatalities}
+\item{HT.estimate}{Horvitz-Thompson estimate, i.e. nf/p}
 \item{pN}{posterior density for each element in 0:maxN number of fatalities}
 }
 \references{

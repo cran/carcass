@@ -1,15 +1,18 @@
 \name{estimateN}
 \alias{estimateN}
-\title{Estimation of number of killed animals based on carcass searches and estimates for detection probability
+\title{Estimation of number of killed animals based on carcass searches and estimates 
+for detection probability
 }
 \description{
-Estimates the number of killed animals from carcass searches taking into account the uncertainty in the estimates for carcass detection probability (or alternatively for searcher efficiency and carcass persistence probability).
+Estimates the number of killed animals from carcass searches taking into account 
+the uncertainty in the estimates for carcass detection probability (or alternatively 
+for searcher efficiency and carcass persistence probability).
 }
 \usage{
 estimateN(count, p = NA, p.lower = NA, p.upper = NA,
           f = NA, f.lower = NA, f.upper = NA, s = NA, 
           s.lower = NA, s.upper = NA, a=1, a.lower=1, a.upper=1,
-          pform = "korner", d = 1, n = NA, maxn = 1000, 
+          pform = "korner", d = 1, n = NA, J=NA, maxn = 1000, 
           nsim = 1000, plot = TRUE, postdist=FALSE, k=1)
 }
 \arguments{
@@ -44,23 +47,30 @@ lower limit of 95\% CI of persistence probability
 upper limit of 95\% CI of persistence probability
 }
   \item{a}{
-estimate for the proportion of killed animals that falled into the searched area. default is 1 (complete area searched).
+estimate for the proportion of killed animals that falled into the searched area. 
+default is 1 (complete area searched).
 }
   \item{a.lower}{
-lower limit of 95\% CI of the proportion of killed animals that falled into the searched area. default is 1 (complete area searched).
+lower limit of 95\% CI of the proportion of killed animals that falled into the 
+searched area. default is 1 (complete area searched).
 }
   \item{a.upper}{
-upper limit of 95\% CI of the proportion of killed animals that falled into the searched area. default is 1 (complete area searched).
+upper limit of 95\% CI of the proportion of killed animals that falled into the 
+searched area. default is 1 (complete area searched).
 }
 
   \item{pform}{
-formula used to estimate p, one of "korner", "huso", "erickson"
+formula used to estimate p, one of "korner", "huso", "erickson", "etterson"
 }
   \item{d}{
  search interval, the number days (or any other time unit) between two searches
 }
   \item{n}{
 number of searches
+}
+  \item{J}{
+vector of length of search intervals. This argument can only be used with pform="etterson". 
+For the other methods regular search intervals are used and their length is given in the argument d.
 }
   \item{maxn}{
 maximal possible number of animals killed for which the posterior probability is estimated (should not be too high but also not be too low!)
@@ -84,12 +94,28 @@ A documented code of this function if given in the Appendix of Korner-Nievergelt
 If postdist is TRUE, the output is a list, if postdist is FALSE, the output is a named numeric vector. 
 }
 \value{
-Either a list or a numeric vector containing the estimate (median of posterior) and the 95\% credible interval
+If postdist=FALSE, the function produces a vector with the median of the posterior distribution ("estimate"),
+the 2.5\% and the 97.5\% quantiles ("lower", and "upper") and the Horvitz-Thompson estimate ("HT.estimate", which equals
+count/p). 
+If postdist=TRUE, the output is a list with the following elements:
+ \item{estimate}{median of the posterior distribution}
+ \item{lower}{2.5\% quantile of the posterior distribution}
+ \item{upper}{97.5\% quantile of the posterior distribution}
+ \item{HT.estimate}{Horvitz-Thompson estimate, i.e. count/p}
+
 }
 \references{
-Erickson WP, Jeffrey J, Kronner K, Bay K (2004) Stateline Wind Project Wildlife. Monitoring Final Report, July 2001 - December 2003. - Technical report peer-reviewed by and submitted to FPL Energy, the Oregon Energy Facility Siting Council, and the Stateline Technical Advisory Committee, Oregon, USA, 105 pp\cr
-Huso M (2010) An estimator of wildlife fatality from observed carcasses. Environmetrics 22: 318-329\cr
-Korner-Nievergelt F, Korner-Nievergelt P, Behr O, Niermann I, Brinkmann R, Hellriegel B (2011) A new method to determine bird and bat fatality at wind energy turbines from carcass searches. Wildlife Biology 17: 350-363
+Erickson WP, Jeffrey J, Kronner K, Bay K (2004) Stateline Wind Project Wildlife. 
+Monitoring Final Report, July 2001 - December 2003. - Technical report peer-reviewed 
+by and submitted to FPL Energy, the Oregon Energy Facility Siting Council, and the Stateline 
+Technical Advisory Committee, Oregon, USA, 105 pp\cr
+Etterson, MA (2013) Hidden Markov models for estimating animal mortality from antropogenic 
+hazards. Ecological Applications 23: 1915-1925\cr
+Huso M (2010) An estimator of wildlife fatality from observed carcasses. Environmetrics 
+22: 318-329\cr
+Korner-Nievergelt F, Korner-Nievergelt P, Behr O, Niermann I, Brinkmann R, Hellriegel B (2011) 
+A new method to determine bird and bat fatality at wind energy turbines from carcass searches.
+Wildlife Biology 17: 350-363
 }
 \author{
 F. Korner-Nievergelt
@@ -111,6 +137,7 @@ estimateN(count=3, f=0.72, f.lower=0.62, f.upper=0.81, s=0.84, s.lower=0.64,
 res.p <- pkorner(f=0.72, f.lower=0.62, f.upper=0.81, s=0.84, s.lower=0.64, s.upper=0.94, 
                  d=2, n=100, CI=TRUE)
 estimateN(count=3, p=res.p["p"], p.lower=res.p["2.5\%"], p.upper=res.p["97.5\%"])
+
 }
 \keyword{methods}
 \keyword{misc}

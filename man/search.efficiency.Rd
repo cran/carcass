@@ -37,7 +37,7 @@ A list with two elements of class data.frame
   \item{f.average}{a data.frame with the estimated detection probabilities per visibility class averaged over the persons}
 }
 \references{
-Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel and Hierarchical Models. Cambridge: Cambridge Universtiy Press.
+Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel and Hierarchical Models. Cambridge: Cambridge University Press.
 
 Niermann I, Brinkmann R, Korner-Nievergelt F, Behr O (2011) Systematische Schlagopfersuche - Methodische Rahmenbedingungen, statistische Analyseverfahren und Ergebnisse. In: Brinkmann R, Niermann I, Behr O, editors. Entwicklung von Methoden zur Untersuchung und Reduktion des Kollisionsrisikos von Fledermaeusen an Onshore-Windenergieanlagen Goettingen: Cuvillier Verlag. pp. 40-115.
 }

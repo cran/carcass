@@ -1,7 +1,11 @@
 #exportPattern("^[[:alpha:]]+")    # everything that starts with a letter is exportet (not dot-functions)
 
 # single objects that have to be exportet, comma has to be in front of the line
-export(estimateN
+export(   CIetterson
+        , estimateN
+        , ettersonEq14
+        , ettersonEq14v1
+        , ettersonEq14v2
 	, perickson
 	, persistence.prob
 	, phuso
@@ -14,5 +18,9 @@ export(estimateN
 #	, batdist
 #	, searches
 	)
+import(expm)
+import(lme4)
+importFrom(arm, sim)
+import(survival)
 
 
