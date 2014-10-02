@@ -4,6 +4,7 @@
 ###########################################################################
 
 # Protocol of changes
+# - fk, 2.7.14:  line 152: change npersons==2 into npersons<=4 & npersons>1 (bug reported by Joanna Bernardino)
 # - fk, 25.10.13: line 55: b changed to bsim@fixef[j,], so that uncertainty of estimates for fixed effects is also considered 
 # - tr, 13.06.13: Data can either be provided with seperate vectors or as a data.frame
 
@@ -43,7 +44,9 @@ if(npersons>2 & nvisclass>1){
   mod <- glmer(cbind(detected, notdetected) ~ visibility + (1|person), data=dat, family=binomial)
   newdat <- expand.grid(visibility=factor(levels(dat$visibility), levels=levels(dat$visibility)), person=levels(dat$person))
   b <- fixef(mod)
-  bperson <- matrix(b, nrow=npersons, ncol=3, byrow=TRUE) + cbind(ranef(mod)$person, rep(0, npersons), rep(0, npersons))
+  bperson <- matrix(b, nrow=npersons, ncol=nvisclass, byrow=TRUE)
+  bperson[,1] <- bperson[,1] + ranef(mod)$person[,1]
+  rownames(bperson) <- levels(dat$person)
   newdat$f <- NA
   Xmat <- model.matrix(~visibility, data=newdat[newdat$person==levels(newdat$person)[1],]) 
   for(i in levels(dat$person)) newdat$f[newdat$person==i] <- plogis(Xmat%*%as.numeric(bperson[i,]))
@@ -53,12 +56,14 @@ if(npersons>2 & nvisclass>1){
   predmat <- matrix(nrow=nrow(newdat), ncol=nsim)
   for(i in levels(dat$person)){ 
     for(j in 1:nsim) {
-    bpersi <- bsim@fixef[j,] + c(bsim@ranef$person[j,i,1],0, 0)
+    bpersi <- bsim@fixef[j,] 
+    bpersi[1] <- bpersi[1] + bsim@ranef$person[j,i,1]
     predmat[newdat$person==i, j] <- plogis(Xmat%*%bpersi)
     }
     }
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- data.frame(visibility=factor(levels(dat$visibility), levels=levels(dat$visibility)))
   Xmat <- model.matrix(~visibility, data=overall)
@@ -67,11 +72,13 @@ if(npersons>2 & nvisclass>1){
   for(i in 1:nsim) predmat[,i] <- plogis(Xmat%*%bsim@fixef[i,])
   overall$lwr <- apply(predmat, 1, quantile, prob=0.025)
   overall$upr <- apply(predmat, 1, quantile, prob=0.975)
+  overall$se <- apply(predmat, 1, sd)
+ 
   }
 
 
 
-if(npersons>1&npersons<5 & nvisclass>1){
+if(npersons>1 & npersons<5 & nvisclass>1){
   mod <- glm(cbind(detected, notdetected) ~ visibility + person, data=dat, family=binomial)
   newdat <- expand.grid(visibility=factor(levels(dat$visibility), levels=levels(dat$visibility)), person=levels(dat$person))
   b <- coef(mod)
@@ -85,6 +92,7 @@ if(npersons>1&npersons<5 & nvisclass>1){
 
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- data.frame(visibility=factor(levels(dat$visibility), levels=levels(dat$visibility)))
   predmat1 <- matrix(nrow=nrow(overall), ncol=nsim)
@@ -92,6 +100,8 @@ if(npersons>1&npersons<5 & nvisclass>1){
   overall$f <- apply(predmat1, 1, mean)
   overall$lwr <- apply(predmat1, 1, quantile, prob=0.025)
   overall$upr <- apply(predmat1, 1, quantile, prob=0.975)
+  overall$se <- apply(predmat1, 1, sd)
+ 
   }
      
 
@@ -109,6 +119,7 @@ if(npersons==1 & nvisclass>1){
 
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- newdat
   }
@@ -136,6 +147,7 @@ if(npersons>=5 & nvisclass==1){
     }
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- data.frame(visibility=levels(dat$visibility))
   Xmat <- model.matrix(~1, data=overall)
@@ -144,11 +156,12 @@ if(npersons>=5 & nvisclass==1){
   for(i in 1:nsim) predmat[,i] <- plogis(Xmat%*%bsim@fixef[i,])
   overall$lwr <- apply(predmat, 1, quantile, prob=0.025)
   overall$upr <- apply(predmat, 1, quantile, prob=0.975)
+  overall$se <- apply(predmat, 1, sd)
   }
 
 
 
-if(npersons==2 & nvisclass==1){
+if(npersons<=4 & npersons>1 &nvisclass==1){
   mod <- glm(cbind(detected, notdetected) ~ person, data=dat, family=binomial)
   newdat <- expand.grid(visibility=levels(dat$visibility), person=levels(dat$person))
   b <- coef(mod)
@@ -162,6 +175,7 @@ if(npersons==2 & nvisclass==1){
 
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- data.frame(visibility=levels(dat$visibility))
   predmat1 <- matrix(nrow=nrow(overall), ncol=nsim)
@@ -169,6 +183,7 @@ if(npersons==2 & nvisclass==1){
   overall$f <- apply(predmat1, 1, mean)
   overall$lwr <- apply(predmat1, 1, quantile, prob=0.025)
   overall$upr <- apply(predmat1, 1, quantile, prob=0.975)
+  overall$se <- apply(predmat1, 1, sd)
   }
      
 
@@ -186,6 +201,7 @@ if(npersons==1 & nvisclass==1){
 
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
+  newdat$se <- apply(predmat, 1, sd)
   
   overall <- newdat
   }

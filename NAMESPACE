@@ -6,6 +6,7 @@ export(   CIetterson
         , ettersonEq14
         , ettersonEq14v1
         , ettersonEq14v2
+        , integrate.persistence
 	, perickson
 	, persistence.prob
 	, phuso
@@ -22,5 +23,6 @@ import(expm)
 import(lme4)
 importFrom(arm, sim)
 import(survival)
+importFrom(MASS, mvrnorm)
 
 

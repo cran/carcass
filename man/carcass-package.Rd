@@ -6,7 +6,12 @@
 Estimation of the number of fatalities from carcass searches
 }
 \description{
-The number of bird or bat fatalities from collisions with buildings, towers or wind energy turbines can be estimated based on carcass searches and experimentally assessed carcass persistence times and searcher efficiency. This package provides diverse functions for estimating the probability that a bird or bat that died is found by a searcher. It further provides a function to obtain a posterior distribution of the number of fatalities based on the number of carcasses found and the estimated detection probability.
+The number of bird or bat fatalities from collisions with buildings, towers or 
+wind energy turbines can be estimated based on carcass searches and experimentally 
+assessed carcass persistence times and searcher efficiency. This package provides 
+diverse functions for estimating the probability that a bird or bat that died is 
+found by a searcher. It further provides a function to obtain a posterior distribution 
+of the number of fatalities based on the number of carcasses found and the estimated detection probability.
 see worked example in Korner-Nievergelt et al 2011
 
 }
@@ -14,18 +19,18 @@ see worked example in Korner-Nievergelt et al 2011
 \tabular{ll}{
 Package: \tab carcass\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
-Date: \tab 2014-04-17\cr
+Version: \tab 1.3\cr
+Date: \tab 2014-10-01\cr
 License: \tab GUI2\cr
 LazyLoad: \tab yes\cr
 }
 }
 \author{
-Fraenzi Korner-Nievergelt, Ivo Niermann, Oliver Behr, Matthew A. Etterson, Robert Brinkmann, Pius Korner, Barbara Hellriegel
+Fraenzi Korner-Nievergelt, Ivo Niermann, Oliver Behr, Matthew A. Etterson, Robert Brinkmann, Pius Korner, Barbara Hellriegel, Tobias Roth, Manuela M. P. Huso, Dan Dalthorp
 
 Maintainer: Fraenzi Korner-Nievergelt <fraenzi.korner@oikostat.ch>
 
-The authors thank Manuela Huso for commenting parts of the code.
+The authors thank Helga Garcia and Joana Bernardino for reporting bugs.
 }
 \references{
 Erickson WP, Jeffrey J, Kronner K, Bay K (2004) Stateline Wind Project Wildlife. Monitoring Final Report, July 2001 - December 2003. - Technical report peer-reviewed by and submitted to FPL Energy, the Oregon Energy Facility Siting Council, and the Stateline Technical Advisory Committee, Oregon, USA, 105 pp\cr

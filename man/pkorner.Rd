@@ -12,7 +12,10 @@ pkorner(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25,
 }
 \arguments{
   \item{s}{
-persistence probability: Probability that a carcass remains on the study plot for one day (or another time unit). Scalar in case of constant persistence probability, vector with persistence probability for each day in case of non-constant persistence probabilities.
+persistence probability: Probability that a carcass remains on the study plot for one day (or another time unit). 
+Scalar in case of constant persistence probability, vector with probabilities to 
+persist until each day after death ('survivor function', i.e. proportion of remaining carcasses for
+each day after death) in case of non-constant persistence probabilities.
 }
   \item{s.lower}{
 lower limit of 95\% CI of persistence probability

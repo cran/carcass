@@ -33,7 +33,7 @@ The function uses the function glmer of the package lme4 and the function sim of
 }
 \value{
 A list with two elements of class data.frame
-  \item{f.perperson}{a \code{data.frame} with the estimated detection probabilities per person and visibility class and its lower and uper limit of the 95\% credible interval}
+  \item{f.perperson}{a \code{data.frame} with the estimated detection probabilities per person and visibility class, its lower and uper limit of the 95\% credible interval and its standard error}
   \item{f.average}{a data.frame with the estimated detection probabilities per visibility class averaged over the persons}
 }
 \references{
