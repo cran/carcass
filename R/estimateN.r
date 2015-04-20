@@ -68,6 +68,11 @@ if (is.finite(p) & is.finite(f))  {
   
 
 if(is.finite(f)[1]){
+ if (f.lower>=f.upper) stop("Something is wrong with the CI of f. If f is known without uncertainty, use posteriorN instead of estimateN")
+ if (s.lower>=s.upper) stop("Something is wrong with the CI of s. If s is known without uncertainty, use posteriorN instead of estimateN")
+ if (a.lower>a.upper) stop("Something is wrong with the CI of a.")
+ 
+
 f.a <- shapeparameter(f, f.lower, f.upper)$a
 f.b <- shapeparameter(f, f.lower, f.upper)$b
 s.a <- shapeparameter(s, s.lower, s.upper)$a
@@ -158,6 +163,7 @@ HT.estimate <- count/(pm*a) # Horwitz-Thompson estimate
 
 
 if(is.finite(p)){
+if(p.lower>=p.upper) stop("Something is wrong with the CI of p. If p is known without error, use posteriorN instead of estimateN")
 p.a <- shapeparameter(p, p.lower, p.upper)$a
 p.b <- shapeparameter(p, p.lower, p.upper)$b
 HT.estimate <- count/(p*a) # Horwitz-Thompson estimate

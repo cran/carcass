@@ -3,7 +3,7 @@
 \alias{carcass}
 \docType{package}
 \title{
-Estimation of the number of fatalities from carcass searches
+Estimation of the Number of Fatalities from Carcass Searches
 }
 \description{
 The number of bird or bat fatalities from collisions with buildings, towers or 

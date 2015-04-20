@@ -1,0 +1,9 @@
+bibentry(
+     bibtype = "Article",
+     title = "Mortality estimation from carcass searches using the R-package carcass - a tutorial",
+     author = as.person("Fraenzi Korner-Nievergelt [aut], Oliver Behr [aut],  Robert Brinkmann [aut],  Matthew A. Etterson [aut], Manuela M. Huso [aut], Dan Dalthorp [aut], Pius Korner-Nievergelt [aut], Tobias Roth [aut], Ivo Niermann [aut]"),
+     year = "2015",
+     journal = "Wildlife Biology",
+     number= "21",
+     pages= "30-43"
+   )

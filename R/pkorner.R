@@ -4,7 +4,8 @@
 # - FK, 26.08.2013: fixed the problem that function returned NA when for non -constant persistence probabilities less number of estimates than n*d were available. The function now assumes that the proportion of persistant carcasses is zero after the last estimate. 
 # - FK, 26.10.2013: inserted for non-constant persistence prob the line for the first search (at day =1)
 # - FK, 20.8.2014: fixed the bug that daily surival has been used instead of the survivor function! IMPORTANT!: Give survivor function now! 
-
+# - pk, 8.10.2014: if(n>1) inserted in serach.efficiency.constant=FALSE 
+# - fk, 20.4.2015: "k=k" inserted on line 69, so that for calculating the CI the correct k is used
 pkorner <-
 function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, search.efficiency.constant=TRUE, CI=FALSE, nsim=1000){
   # s = probability that a carcass remains 24 hours (scalar if constant, vector otherwise)
@@ -12,7 +13,7 @@ function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, sea
   #     given it persisted to the search
   # d = (average) number of days between two searches
   # n = number of searches (n * d = length of study period)
-  # k = factor by which the search efficiency is multiblied after each search
+  # k = factor by which the search efficiency is multiplied after each search
   #--------------------------------------------------------------
   
   if(length(f)>1) stop("f needs to be a scalar. Use ettersonEqv1 or ettersonEqv2 if searcher efficiency differs between calender dates or between the searches.")
@@ -29,10 +30,12 @@ function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, sea
   if(!search.efficiency.constant & persistence.probability.constant){
     A<-s*(1-s^d)/(1-s)
     summepfound<-A*f
-    for(x in 2:n){
-      summep<-1
-      for(j in 1:(x-1)) summep<-summep+k^(x-j) * s^((x-j)*d) * productsef(f, k, n=x, j)
-      summepfound<-summepfound+A*f*summep
+    if(n>1){
+      for(x in 2:n){
+        summep<-1
+        for(j in 1:(x-1)) summep<-summep+k^(x-j) * s^((x-j)*d) * productsef(f, k, n=x, j)
+        summepfound<-summepfound+A*f*summep
+      }# close if(n>1)
     }
     p<-summepfound/(d*n)     
   }
@@ -63,7 +66,9 @@ function(s, s.lower=NA, s.upper=NA, f, f.lower=NA, f.upper=NA, d, n, k=0.25, sea
       sr <- s
       sr[1] <- rbeta(1, s.a, s.b)
       if(length(s)>1) sr[2:length(s)] <- s[2:length(s)]*sr[1]/s[1]
-      resCI[i] <- pkorner(s=sr, f=rbeta(1,f.a, f.b), d=d, n=n, search.efficiency.constant=search.efficiency.constant, CI=FALSE, nsim=nsim)
+      resCI[i] <- pkorner(s=sr, f=rbeta(1,f.a, f.b), d=d, n=n, 
+                          search.efficiency.constant=search.efficiency.constant, 
+                          k=k, CI=FALSE, nsim=nsim)
     }
     names(p) <- "p"
     p <- c(p, quantile(x=resCI, probs=c(0.025, 0.975)))
