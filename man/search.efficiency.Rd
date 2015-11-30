@@ -50,14 +50,14 @@ data(searches)
 searches
 
 # Call to the function with data provided as data.frame:
-search.efficiency(searches)
+\dontrun{search.efficiency(searches)}
 
 # Alternative:
 per <- searches$person
 visi <- searches$visibility
 det <- searches$detected
 notdet <- searches$notdetected
-search.efficiency(person=per, visibility=visi, detected=det, notdetected=notdet)
+\dontrun{search.efficiency(person=per, visibility=visi, detected=det, notdetected=notdet)}
 
 }
 \keyword{misc}

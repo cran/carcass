@@ -13,6 +13,8 @@
 #-------------------------------------------------------------------------------
 
 # track of changes
+# 25.11.2015, fk: calculation of the shapeparameters of a moved outside the is.finit(f) loop; 
+#                 this was a severe bug! Thanks Sergio Cabrera-Cruz for reporting inconsistencies!
 # 17.7.2014, fk: integration of persistence probabilities over the time intervals 
 #                 to account for continuous arrival of carcasses, argument "arrival" added.
 
@@ -65,8 +67,13 @@ estimateN <- function(count, p=NA, p.lower=NA, p.upper=NA, f=NA, f.lower=NA, f.u
 if (is.finite(p) & is.finite(f))  {
     warning('f, f.lower, f.upper, s, s.lower, s.upper, and d will be ignored')
   }
+ 
+   
+if(a.lower<a.upper){
+    a.a <- shapeparameter(a, a.lower, a.upper)$a
+    a.b <- shapeparameter(a, a.lower, a.upper)$b
+}
   
-
 if(is.finite(f)[1]){
  if (f.lower>=f.upper) stop("Something is wrong with the CI of f. If f is known without uncertainty, use posteriorN instead of estimateN")
  if (s.lower>=s.upper) stop("Something is wrong with the CI of s. If s is known without uncertainty, use posteriorN instead of estimateN")
@@ -77,10 +84,6 @@ f.a <- shapeparameter(f, f.lower, f.upper)$a
 f.b <- shapeparameter(f, f.lower, f.upper)$b
 s.a <- shapeparameter(s, s.lower, s.upper)$a
 s.b <- shapeparameter(s, s.lower, s.upper)$b
-if(a.lower<a.upper){
-a.a <- shapeparameter(a, a.lower, a.upper)$a
-a.b <- shapeparameter(a, a.lower, a.upper)$b
-}
 
 Npostdist <- numeric(maxn+1) 
 
@@ -173,8 +176,8 @@ Npostdist <- numeric(maxn+1)
 
 for(i in 1:nsim){
 pr <- rbeta(1, p.a, p.b)
-
-postNtemp <- posteriorN(nf=count, p=pr, maxN=maxn,  plot=FALSE, dist=TRUE)
+ar <- ifelse(a.lower<a.upper, rbeta(1, a.a, a.b),a)
+postNtemp <- posteriorN(nf=count, p=pr*ar, maxN=maxn,  plot=FALSE, dist=TRUE)
 Npostdist <- Npostdist + postNtemp$pN    #Sum the posterior densities over all nsim simulations.
 
 } # close loop i

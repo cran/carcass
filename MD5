@@ -1,7 +1,7 @@
-491a58c5ffb4de4228f26f7eed64aff4 *DESCRIPTION
-fcda4222e6dbaebe79d2623a50bc8736 *NAMESPACE
+4dda7a9fc951763bd215c3586b4bafdf *DESCRIPTION
+f3687fcd2e8aa7cc4c7a4bf920d68224 *NAMESPACE
 8113d78d21fbf5e94be67607b1de3dba *R/CIetterson.r
-2161dac7daa88aeb66503d128b888ba1 *R/estimateN.r
+5f817e447e36897d3a4b62001cb011bb *R/estimateN.r
 3e448f498cc4d1cfd8124fbb7124bbb7 *R/ettersonEq14.r
 7c3fe790c7c72795b0af1dee02d149f9 *R/ettersonEq14v1.r
 43828563fb089ee3f5b984ea514408b3 *R/ettersonEq14v2.r
@@ -32,6 +32,6 @@ fc32d58ad070d68cd95842628fb5b996 *man/persistence.Rd
 183c6d8707fea6359776ccf30b035357 *man/phuso.Rd
 6cf4890a94429491bcb4243d8d11ccbc *man/pkorner.Rd
 5869cbdd1760d16d991f3d6cf4af89a1 *man/posteriorN.Rd
-df80bbc58653d6d0c5820d567a6c7461 *man/search.efficiency.Rd
+dba27a6c92bd8e2a40a8841adf9f3b77 *man/search.efficiency.Rd
 2cb840872e699cd6871f6073aff6665e *man/searches.Rd
 1cf7e35ae06d5f4f34f16611c5218f93 *man/shapeparameter.Rd
