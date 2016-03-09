@@ -17,6 +17,8 @@
 #                 this was a severe bug! Thanks Sergio Cabrera-Cruz for reporting inconsistencies!
 # 17.7.2014, fk: integration of persistence probabilities over the time intervals 
 #                 to account for continuous arrival of carcasses, argument "arrival" added.
+# 8. 3. 2016, fk: Persistence probabilities are constrained so that they cannot 
+#                 become exactly 1: sr[sr>0.9999] <- 0.9999. Bug reported by Greg Forcey.
 
 #-------------------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ if(is.finite(f)[1]){
  if (f.lower>=f.upper) stop("Something is wrong with the CI of f. If f is known without uncertainty, use posteriorN instead of estimateN")
  if (s.lower>=s.upper) stop("Something is wrong with the CI of s. If s is known without uncertainty, use posteriorN instead of estimateN")
  if (a.lower>a.upper) stop("Something is wrong with the CI of a.")
- 
+ if (length(s)==1 & s==1) stop("s=1: no removal. This is very unlikely. The formulas implemented here are not made for this case.")
 
 f.a <- shapeparameter(f, f.lower, f.upper)$a
 f.b <- shapeparameter(f, f.lower, f.upper)$b
@@ -128,6 +130,7 @@ if(length(s)>1){
 }
 
 if(length(s)==1) sr <- rbeta(1, s.a, s.b)
+sr[sr>0.9999] <- 0.9999
 
 # integration of persistence probability over the interval when constant arrival
 if(arrival=="uniform") sr <- integrate.persistence(sr, n=n, d=d)

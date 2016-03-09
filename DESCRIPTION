@@ -1,8 +1,8 @@
 Package: carcass
 Type: Package
 Title: Estimation of the Number of Fatalities from Carcass Searches
-Version: 1.5
-Date: 2015-11-29
+Version: 1.6
+Date: 2016-03-08
 Author: Fraenzi Korner-Nievergelt, Ivo Niermann, Oliver Behr, Matthew A. Etterson, Robert Brinkmann, Pius Korner, Barbara Hellriegel, Tobias Roth, Manuela M. P. Huso, Dan Dalthorp
 Maintainer: Fraenzi Korner-Nievergelt <fraenzi.korner@oikostat.ch>
 Depends: R (>= 3.1.0), stats, lme4, survival
@@ -11,6 +11,6 @@ Description: The number of bird or bat fatalities from collisions with buildings
 License: GPL-2
 LazyLoad: yes
 NeedsCompilation: no
-Packaged: 2015-11-29 20:40:35 UTC; fk
+Packaged: 2016-03-08 20:34:54 UTC; fk
 Repository: CRAN
-Date/Publication: 2015-11-30 01:34:47
+Date/Publication: 2016-03-09 01:37:26
