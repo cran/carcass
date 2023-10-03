@@ -4,6 +4,9 @@
 ###########################################################################
 
 # Protocol of changes
+# - fk, 2.10.2023: changed class(dat) != "data.frame" to !inherits(dat, "data.frame)
+# - fk, 8.5.2016: line 35: definition of person and visibility class as factor
+# - fk, 8.5.2016: for number of visibility classes= 1: calculation of overall f changed, we use mixed models now to average over the persons
 # - fk, 2.7.14:  line 152: change npersons==2 into npersons<=4 & npersons>1 (bug reported by Joanna Bernardino)
 # - fk, 25.10.13: line 55: b changed to bsim@fixef[j,], so that uncertainty of estimates for fixed effects is also considered 
 # - tr, 13.06.13: Data can either be provided with seperate vectors or as a data.frame
@@ -22,16 +25,16 @@ search.efficiency <- function(dat=NA, person=NA, visibility=NA, detected=NA, not
 # Finally:
 # - nsim: number of simulations to be drawn from the posterior distributions to describe the 95% credible intervals
   
-if(is.na(person[1]) & class(dat) != "data.frame") {
+if(is.na(person[1]) & !inherits(dat, "data.frame")) {
   stop("Please provide the data either as a data.frame containing all data or, alternatively
 as seperate vectors (i.e. the vector person, visibility, detected, nondetected).")
 }
     
-if(class(dat) != "data.frame") {
+if(!inherits(dat, "data.frame")) {
   if(length(person)!=length(visibility) | length(person)!=length(detected) | length(person)!=length(notdetected)) {
     stop("The vector 'person', 'visibility', 'detected' and 'notdetected' should all have the same length.")
   }
-  dat <- data.frame(list(person=person, visibility=visibility, detected=detected, notdetected=notdetected))
+  dat <- data.frame(list(person=factor(person), visibility=factor(visibility), detected=detected, notdetected=notdetected))
 }
 
 dat$visibility <- factor(dat$visibility, levels=levels(dat$visibility))[drop=TRUE]   
@@ -93,15 +96,18 @@ if(npersons>1 & npersons<5 & nvisclass>1){
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
   newdat$se <- apply(predmat, 1, sd)
-  
+
+  mod1 <- glmer(cbind(detected, notdetected) ~ visibility + (1|person), data=dat, family=binomial)
+  b1 <- fixef(mod1)
+  bsim1 <- sim(mod1, n.sim=nsim)
   overall <- data.frame(visibility=factor(levels(dat$visibility), levels=levels(dat$visibility)))
-  predmat1 <- matrix(nrow=nrow(overall), ncol=nsim)
-  for(i in 1:nsim) predmat1[,i] <- tapply(predmat[,i], newdat$visibility, mean)
-  overall$f <- apply(predmat1, 1, mean)
-  overall$lwr <- apply(predmat1, 1, quantile, prob=0.025)
-  overall$upr <- apply(predmat1, 1, quantile, prob=0.975)
-  overall$se <- apply(predmat1, 1, sd)
- 
+  Xmat <- model.matrix(~visibility, data=overall)
+  overall$f <- plogis(Xmat%*%b1)
+  predmat <- matrix(nrow=nrow(overall), ncol=nsim)
+  for(i in 1:nsim) predmat[,i] <- plogis(Xmat%*%bsim1@fixef[i,])
+  overall$lwr <- apply(predmat, 1, quantile, prob=0.025)
+  overall$upr <- apply(predmat, 1, quantile, prob=0.975)
+  overall$se <- apply(predmat, 1, sd)
   }
      
 
@@ -120,11 +126,8 @@ if(npersons==1 & nvisclass>1){
   newdat$lwr <- apply(predmat, 1, quantile, prob=0.025)
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
   newdat$se <- apply(predmat, 1, sd)
-  
   overall <- newdat
   }
-
-
 
 
 if(npersons>=5 & nvisclass==1){
@@ -177,13 +180,12 @@ if(npersons<=4 & npersons>1 &nvisclass==1){
   newdat$upr <- apply(predmat, 1, quantile, prob=0.975)
   newdat$se <- apply(predmat, 1, sd)
   
-  overall <- data.frame(visibility=levels(dat$visibility))
-  predmat1 <- matrix(nrow=nrow(overall), ncol=nsim)
-  for(i in 1:nsim) predmat1[,i] <- tapply(predmat[,i], newdat$visibility, mean)
-  overall$f <- apply(predmat1, 1, mean)
-  overall$lwr <- apply(predmat1, 1, quantile, prob=0.025)
-  overall$upr <- apply(predmat1, 1, quantile, prob=0.975)
-  overall$se <- apply(predmat1, 1, sd)
+  mod1 <- glmer(cbind(detected, notdetected) ~ 1 + (1|person), data=dat, family=binomial)
+  b1 <- fixef(mod1)
+  bsim1 <- sim(mod1, n.sim=nsim)
+  overall <- data.frame(f=plogis(fixef(mod1)))
+  overall$lwr <- quantile(plogis(bsim1@fixef[,1]), prob=0.025)
+  overall$upr <- quantile(plogis(bsim1@fixef[,1]), prob=0.975)
   }
      
 

@@ -1,0 +1,7 @@
+"studyname" "study" "rotor.diameter.m" "nacelle.height.m" "n" "method" "species" "prop10m" "prop20m" "prop30m" "prop40m" "prop50m" "prop60m" "prop70m" "prop80m" "prop50mplus"
+"niermann2011" "1" 70 98 100 "empirical" "bat" 0.21 0.39 0.27 0.11 0.02 NA NA NA 0
+"arnett2005" "2a" 72 80 398 "empirical" "bat" 0.1 0.26 0.28 0.26 0.07 0.03 0 NA 0.03
+"arnett2005" "2b" 72 80 262 "empirical" "bat" 0.04 0.19 0.28 0.31 0.14 0.03 0.01 NA 0.04
+"hull2010AJEM" "3" 66 65 NA "physical_model" "bat" 0.3 0.26 0.2 0.15 0.07 0.02 0 0 0.02
+"hull2010AJEM" "3" 90 80 NA "physical_model" "bat" 0.24 0.23 0.19 0.15 0.12 0.06 0.01 0 0.07
+"hull2010AJEM" "3" 110 94 NA "physical_model" "bat" 0.21 0.2 0.18 0.15 0.12 0.09 0.04 0.01 0.14

@@ -20,7 +20,7 @@ probability of finding a carcass. This probability can be obtained by e.g. pkorn
 the number of carcasses found
 }
   \item{maxN}{
-the maximal number of fatalities for which a posterior densitiy should be given
+the maximal number of fatalities for which a posterior densitiy should be given. It should be higher than the upper tail (density larger 0.0001) of the posterior distribution (there is a warning if not). If maxN is lower than the lower edge of the posterior distribution, an error is produced. 
 }
   \item{ci.int}{
 length of the credible interval that should be given. Default is 0.95.
@@ -45,8 +45,8 @@ Korner-Nievergelt F, Korner-Nievergelt P, Behr O, Niermann I, Brinkmann R, Hellr
 Fraenzi Korner-Nievergelt
 }
 \note{
-This function cannot handle larger numbers, e.g. maxN > 2000 is not possible.
 The function does not take into account the uncertainty of the estimate for the detection probability. If you want do account for this uncertainty, use the function estimateN.
+For reporting bugs in the code, we would like to thank A. Marcia Barbosa.
 }
 
 

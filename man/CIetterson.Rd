@@ -4,7 +4,7 @@
 Confidence interval for the functions ettersonEq14, ettersonEq14v1 and ettersonEq14v2
 }
 \description{
-Calculates Monte Carlo confidence intervals for the estimated carcass detection probability
+Calculates the Monte Carlo confidence intervals for the estimated carcass detection probability
 when persistence probability and searcher efficiency are uncertain. 
 }
 \usage{
